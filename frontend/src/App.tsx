@@ -100,16 +100,14 @@ function App() {
   }, [currentAccount.id, isAuthenticated])
 
   useEffect(() => {
-    const pairs = new Set<string>()
-    Object.values(accounts).forEach(account => {
-      trades.forEach(trade => {
-        if (trade.pair) {
-          pairs.add(trade.pair)
-        }
-      })
-    })
-    setPreviousPairs(pairs)
-  }, [accounts, trades])
+    const pairs = new Set<string>();
+    trades.forEach(trade => {
+      if (trade.pair) {
+        pairs.add(trade.pair);
+      }
+    });
+    setPreviousPairs(pairs);
+  }, [trades]);
 
   const handleLogin = (email: string) => {
     console.log('Login successful:', email);
