@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { API_URL } from '../config';
 import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
@@ -78,7 +78,7 @@ const SessionAnalytics: React.FC<SessionAnalyticsProps> = ({ userEmail, currentA
     if (currentAccount.id) {
       fetchFilteredTrades();
     }
-  }, [selectedSession, profitFilter, dateRange.start, dateRange.end, currentAccount.id]);
+  }, [selectedSession, profitFilter, currentAccount.id]);
 
   const fetchSessions = async () => {
     try {
@@ -97,9 +97,7 @@ const SessionAnalytics: React.FC<SessionAnalyticsProps> = ({ userEmail, currentA
         },
         params: {
           session: selectedSession,
-          profit_filter: profitFilter,
-          start_date: dateRange.start,
-          end_date: dateRange.end
+          profit_filter: profitFilter
         }
       });
 
@@ -113,13 +111,6 @@ const SessionAnalytics: React.FC<SessionAnalyticsProps> = ({ userEmail, currentA
       const losingTrades = trades.filter((t: Trade) => t.profit_amount < 0);
       const totalTrades = trades.length;
       const winRate = totalTrades > 0 ? (winningTrades.length / totalTrades) * 100 : 0;
-      const lossRate = totalTrades > 0 ? (losingTrades.length / totalTrades) * 100 : 0;
-      const avgWinAmount = winningTrades.length > 0 
-        ? winningTrades.reduce((sum, t) => sum + t.profit_amount, 0) / winningTrades.length 
-        : 0;
-      const avgLossAmount = losingTrades.length > 0 
-        ? Math.abs(losingTrades.reduce((sum, t) => sum + t.profit_amount, 0)) / losingTrades.length 
-        : 0;
 
       setAnalytics({
         total_trades: totalTrades,
@@ -128,8 +119,8 @@ const SessionAnalytics: React.FC<SessionAnalyticsProps> = ({ userEmail, currentA
         win_rate: winRate,
         total_profit: response.data.total_pl,
         average_profit: totalTrades > 0 ? response.data.total_pl / totalTrades : 0,
-        largest_win: Math.max(...winningTrades.map(t => t.profit_amount), 0),
-        largest_loss: Math.min(...losingTrades.map(t => t.profit_amount), 0)
+        largest_win: Math.max(...winningTrades.map((t: Trade) => t.profit_amount), 0),
+        largest_loss: Math.min(...losingTrades.map((t: Trade) => t.profit_amount), 0)
       });
     } catch (error) {
       console.error('Error fetching filtered trades:', error);

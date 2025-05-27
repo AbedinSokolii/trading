@@ -1,22 +1,17 @@
 import React, { useState } from 'react';
-import { UserCircleIcon, Cog6ToothIcon, SunIcon, MoonIcon } from '@heroicons/react/24/solid';
+import { Cog6ToothIcon, SunIcon, MoonIcon } from '@heroicons/react/24/solid';
 import Settings from './Settings';
 import { useTheme } from '../context/ThemeContext';
 
-interface Account {
-  id: string;
-  name: string;
-}
-
 interface NavbarProps {
-  accounts: Account[];
-  currentAccount: Account;
+  accounts: Array<{ id: string; name: string }>;
+  currentAccount: { id: string; name: string };
   onAccountChange: (accountId: string) => void;
   userEmail: string;
   userName: string;
   profilePic: string | null;
   onLogout: () => void;
-  onUpdateProfile: (name: string, profilePic: string | null) => void;
+  onUpdateProfile: (name: string, pic: string | null) => void;
 }
 
 const Navbar: React.FC<NavbarProps> = ({

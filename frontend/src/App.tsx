@@ -179,9 +179,9 @@ function App() {
   };
 
   const handleAccountChange = async (accountId: string) => {
-    const account = accounts.find(a => a.id === accountId)
-    if (account) {
-      setCurrentAccount(account)
+    const foundAccount = accounts.find(a => a.id === accountId)
+    if (foundAccount) {
+      setCurrentAccount(foundAccount)
     } else {
       try {
         const response = await axios.post('http://localhost:5000/api/accounts', {
