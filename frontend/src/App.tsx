@@ -179,15 +179,24 @@ function App() {
   };
 
   const handleAccountChange = async (accountId: string) => {
-    try {
-      const response = await axios.post('http://localhost:5000/api/accounts', {
-        id: accountId,
-        name: `Account ${accounts.length + 1}`
-      })
-      setAccounts([...accounts, response.data])
-      setCurrentAccount(response.data)
-    } catch (error) {
-      console.error('Error creating account:', error)
+    const existingAccount = accounts.find(a => a.id === accountId);
+    if (existingAccount) {
+      setCurrentAccount(existingAccount);
+    } else {
+      try {
+        const response = await axios.post(`${API_URL}/api/accounts`, {
+          id: accountId,
+          name: `Account ${accounts.length + 1}`
+        }, {
+          headers: {
+            'X-User-Email': userEmail
+          }
+        });
+        setAccounts([...accounts, response.data]);
+        setCurrentAccount(response.data);
+      } catch (error) {
+        console.error('Error creating account:', error);
+      }
     }
   }
 
