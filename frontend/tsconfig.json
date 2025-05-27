@@ -14,12 +14,8 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "allowJs": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true
+    "noFallthroughCasesInSwitch": true
   },
-  "include": ["frontend/src"],
-  "references": [{ "path": "./frontend/tsconfig.node.json" }]
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 } 
