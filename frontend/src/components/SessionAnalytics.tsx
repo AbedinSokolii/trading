@@ -48,15 +48,10 @@ const SessionAnalytics: React.FC<SessionAnalyticsProps> = ({ userEmail, currentA
   const [sessions, setSessions] = useState<Session[]>([]);
   const [selectedSession, setSelectedSession] = useState<string>('');
   const [profitFilter, setProfitFilter] = useState<string>('');
-  const [dateRange, setDateRange] = useState({
-    start: '',
-    end: ''
-  });
   const [analytics, setAnalytics] = useState<Analytics | null>(null);
   const [isMinimized, setIsMinimized] = useState(false);
   const [filteredTrades, setFilteredTrades] = useState<Trade[]>([]);
   const [totalPL, setTotalPL] = useState<number>(0);
-  const [sessionSummary, setSessionSummary] = useState<Record<string, SessionSummary>>({});
 
   useEffect(() => {
     fetchSessions();
@@ -104,7 +99,6 @@ const SessionAnalytics: React.FC<SessionAnalyticsProps> = ({ userEmail, currentA
       const trades = response.data.trades || [];
       setFilteredTrades(trades);
       setTotalPL(response.data.total_pl);
-      setSessionSummary(response.data.session_summary);
       
       // Calculate analytics
       const winningTrades = trades.filter((t: Trade) => t.profit_amount > 0);
@@ -233,49 +227,6 @@ const SessionAnalytics: React.FC<SessionAnalyticsProps> = ({ userEmail, currentA
                 </p>
               </div>
             </div>
-
-            {/* Session Summary if in a specific session */}
-            {selectedSession && (
-              <div className="bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                  {selectedSession} Session Summary
-                </h3>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Session Trades</p>
-                    <p className="text-xl font-semibold text-gray-900 dark:text-white">
-                      {analytics.total_trades}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Session Win Rate</p>
-                    <p className="text-xl font-semibold text-green-600 dark:text-green-400">
-                      {analytics.win_rate.toFixed(1)}%
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Session P/L</p>
-                    <p className={`text-xl font-semibold ${
-                      totalPL >= 0 
-                        ? 'text-green-600 dark:text-green-400'
-                        : 'text-red-600 dark:text-red-400'
-                    }`}>
-                      ${totalPL.toFixed(2)}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Avg Trade P/L</p>
-                    <p className={`text-xl font-semibold ${
-                      analytics.average_profit >= 0 
-                        ? 'text-green-600 dark:text-green-400'
-                        : 'text-red-600 dark:text-red-400'
-                    }`}>
-                      ${analytics.average_profit.toFixed(2)}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
 
             {/* Filtered Trades List */}
             <div className="mt-6">

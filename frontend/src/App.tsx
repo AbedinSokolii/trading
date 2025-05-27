@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { PlusIcon, TrashIcon } from '@heroicons/react/24/solid'
+import { TrashIcon } from '@heroicons/react/24/solid'
 import Navbar from './components/Navbar'
 import ImageUpload from './components/ImageUpload'
 import Auth from './components/Auth'
