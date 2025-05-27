@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "install-all": "npm install && cd frontend && npm install",
-    "build": "cd frontend && npm run build",
+    "build": "cd frontend && npm install && npm run build",
     "dev": "nodemon server.js"
   },
   "dependencies": {
@@ -16,6 +16,7 @@
     "mongoose": "^7.0.3"
   },
   "devDependencies": {
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "typescript": "^5.0.4"
   }
 } 
