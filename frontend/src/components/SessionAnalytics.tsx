@@ -37,13 +37,6 @@ interface SessionAnalyticsProps {
   currentAccount: { id: string };
 }
 
-interface SessionSummary {
-  total_pl: number;
-  count: number;
-  wins: number;
-  losses: number;
-}
-
 const SessionAnalytics: React.FC<SessionAnalyticsProps> = ({ userEmail, currentAccount }) => {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [selectedSession, setSelectedSession] = useState<string>('');
